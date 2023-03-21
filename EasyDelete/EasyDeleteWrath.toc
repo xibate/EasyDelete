@@ -1,0 +1,17 @@
+## Interface: 30401
+## X-Interface: 30401
+## Title: Easy Delete
+## Title-deDE: einfaches Löschen
+## Title-esES: es fácil de borrar
+## Title-koKR: 래리스의 쉬운 삭제
+## Title-zhTW: ลบง่าย 
+## Title-zhCN: 很容易刪除
+## Title-ruRU: Легкое удаление Лерита
+## Notes: This AddOn makes it easy to delete valueable items
+## X-Category: Interface Enhancements
+## X-Website: https://www.curseforge.com/wow/addons/easy-delete
+## X-Curse-Project-ID: 96313
+## Author: Xibate
+## Version: 13.28
+## DefaultState: enabled
+EasyDelete.lua
