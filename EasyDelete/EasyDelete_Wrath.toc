@@ -1,5 +1,4 @@
-## Interface: 100105
-## X-Min-Interface: 100100
+## Interface: 30402
 ## Title: Easy Delete
 ## Title-deDE: einfaches Löschen
 ## Title-esES: es fácil de borrar
