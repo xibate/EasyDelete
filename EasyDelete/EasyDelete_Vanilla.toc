@@ -1,4 +1,4 @@
-## Interface: 11404
+## Interface: 11502
 ## Title: Easy Delete
 ## Title-deDE: einfaches Löschen
 ## Title-esES: es fácil de borrar
