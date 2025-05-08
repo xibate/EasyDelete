@@ -1,0 +1,27 @@
+name: Publish Addon to CurseForge
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+      - name: Install BigWigs Packager
+        run: pip install bigwigs-packager
+      - name: Package and Upload
+        env:
+          CF_API_KEY: ${{ secrets.CF_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.SGITHUB_TOKEN }}
+        run: |
+          python -m bigwigs_packager \
+            --curse-id 96313 \
+            --game-versions retail,classic,cata \
+            --release
