@@ -1,4 +1,4 @@
-## Interface: 50504, 50503
+## Interface: 50504
 ## Title: Easy Delete
 ## Title-deDE: Einfaches Löschen
 ## Title-esES: Borrado Fácil
@@ -10,7 +10,8 @@
 ## Title-ruRU: Легкое Удаление
 ## Title-zhCN: 简单删除
 ## Title-zhTW: 簡單刪除
-## Notes: This AddOn makes it easy to delete valueable items
+## Notes: This AddOn makes it easy to delete valuable items
+## IconTexture: Interface\AddOns\EasyDelete\Media\Icon
 ## X-Category: Interface Enhancements, Utility, Miscellaneous
 ## X-Website: https://www.curseforge.com/wow/addons/easy-delete
 ## X-Curse-Project-ID: 96313
