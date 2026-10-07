@@ -2,3 +2,6 @@ package-as: EasyDelete
 
 move-folders:
   EasyDelete/EasyDelete: EasyDelete
+
+ignore:
+  - README.md
