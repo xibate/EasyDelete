@@ -5,23 +5,19 @@ on:
     tags:
       - "v*"
 
+permissions:
+  contents: write # lets the packager create a GitHub release
+
 jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
         with:
-          python-version: "3.x"
-      - name: Install BigWigs Packager
-        run: pip install bigwigs-packager
-      - name: Package and Upload
+          fetch-depth: 0 # full history so the packager can build a changelog
+
+      - name: Package and upload
+        uses: BigWigsMods/packager@v2
         env:
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
-          GITHUB_TOKEN: ${{ secrets.SGITHUB_TOKEN }}
-        run: |
-          python -m bigwigs_packager \
-            --curse-id 96313 \
-            --game-versions retail,classic,cata \
-            --release
+          CF_API_TOKEN: ${{ secrets.CF_API_KEY }}
+          GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
