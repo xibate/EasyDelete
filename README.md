@@ -59,23 +59,6 @@ When you drag an item out of your bags to destroy it, the game fires `DELETE_ITE
 
 Nothing else in the game is changed, and the item is only deleted when you click **Yes** yourself.
 
-## Localization
-
-The addon name is translated in the AddOns list for English, German, Spanish (EU and LatAm), French, Italian, Korean, Brazilian Portuguese, Russian, and Simplified and Traditional Chinese.
-
-## For maintainers: releasing a new version
-
-Releases are fully automated by [`.github/workflows/release.yml`](.github/workflows/release.yml) using the [BigWigs packager](https://github.com/BigWigsMods/packager):
-
-1. Merge your changes into `master`.
-2. Create a release (or push a tag) starting with `v`, for example `v3.1`.
-   - `v3.1` is uploaded as a **release**, `v3.1-beta1` as a **beta** and `v3.1-alpha1` as an **alpha**.
-3. The workflow builds `EasyDelete-v3.1.zip`, uploads it to CurseForge for every game version found in the `.toc` files, and attaches it to the GitHub release.
-
-The workflow needs a repository secret named `CF_API_KEY` that holds a [CurseForge API token](https://legacy.curseforge.com/account/api-tokens).
-
-After a game patch, update the `## Interface:` line in the matching `.toc` file before tagging a new release.
-
 ## Credits
 
 Made by **Xibate** and **Zynx**.
