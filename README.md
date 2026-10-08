@@ -27,7 +27,7 @@ Deleting a valuable item in World of Warcraft makes you type the word **DELETE**
 
 | Game version | Patch | TOC file |
 | --- | --- | --- |
-| Retail (Midnight) | 12.1.0 | `EasyDelete.toc` |
+| Retail (Midnight) | 12.1.0 / 12.1.5 | `EasyDelete.toc` |
 | WoW Forever | 1.60.1 | `EasyDelete_Camelot.toc` |
 | Mists of Pandaria Classic | 5.5.4 | `EasyDelete_Mists.toc` |
 | Wrath of the Lich King Classic / Titan | 3.4.5 / 3.80.2 | `EasyDelete_Wrath.toc` |
