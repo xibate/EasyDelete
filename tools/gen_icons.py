@@ -1,7 +1,6 @@
 """Draws the addon's textures in EasyDelete/Media/ and the README icon, in the line style of Crescendo's logo.
 
 - Icon.tga: the AddOns list icon, a red trash can in a ring, 64x64
-- trash.tga: a white trash can for the dialog's title, 32x32. The game tints it with SetVertexColor
 - .github/icon.png: the README icon, 256x256
 
 Run: python3 tools/gen_icons.py"""
@@ -50,22 +49,6 @@ def icon(size):
     return image.resize((size, size), Image.LANCZOS)
 
 
-def glyph(size):
-    """The white trash can on its own, filling the texture like Crescendo's rail icons"""
-    scale = 8
-    big = size * scale
-    image = Image.new('RGBA', (big, big), (255, 255, 255, 0))
-    draw = ImageDraw.Draw(image)
-    unit = big / 32
-
-    def p(x, y):
-        return ((x + 4) * unit, (y + 4) * unit)
-
-    trash(draw, p, round(1.9 * unit), 'white')
-    return image.resize((size, size), Image.LANCZOS)
-
-
 icon(64).save(os.path.join(media, 'Icon.tga'))
-glyph(32).save(os.path.join(media, 'trash.tga'))
 icon(256).save(os.path.join(root, '.github', 'icon.png'))
 print('icons written to', os.path.abspath(media))

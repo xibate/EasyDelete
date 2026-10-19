@@ -2,8 +2,8 @@ local _, ns = ...
 
 --The addon's texts. Buttons like Delete, Cancel, Yes and No use the game's own translations
 ns.L = {
-    title = "Delete item",
-    hint = "Enter deletes, Escape keeps it",
+    title = "Delete this item?",
+    hint = "Enter deletes, Esc keeps it",
     questWarning = "Deleting it also abandons the quest it belongs to.",
     previewItem = "Thunderfury, Blessed Blade of the Windseeker",
     combat = "Combat started, so the item went back. Delete it again after the fight.",

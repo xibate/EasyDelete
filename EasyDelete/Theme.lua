@@ -93,8 +93,8 @@ function ns:SectionLabel(parent, label)
     return text
 end
 
---A flat button with a faint border that lights up on hover. 'accent' gives it the accent colour, 'plain' no fill or
---border until it is hovered
+--A flat button with a faint border that lights up on hover. 'accent' gives it the accent colour, 'solid' fills it with
+--the accent colour and dark text, like Crescendo's selected tabs, 'plain' has no fill or border until it is hovered
 function ns:Button(parent, label, width, height, onClick, accent)
     local button = CreateFrame("Button", nil, parent)
     button:SetSize(width, height or 24)
@@ -104,7 +104,13 @@ function ns:Button(parent, label, width, height, onClick, accent)
     button.label:SetPoint("CENTER")
     button.label:SetText(label)
     local function Paint(hover)
-        if accent == 'plain' then
+        if accent == 'solid' then
+            local r, g, b = ns:GetAccent()
+            background:SetColorTexture(r, g, b, hover and 1 or 0.9)
+            setBorder(r, g, b, 1)
+            button.label:SetTextColor(0.05, 0.05, 0.05, 1)
+            return
+        elseif accent == 'plain' then
             background:SetColorTexture(1, 1, 1, hover and 0.06 or 0)
             setBorder(1, 1, 1, 0)
         elseif accent then

@@ -5,9 +5,10 @@ local _, ns = ...
 
 local theme = ns.theme
 local WIDTH = 380
-local CARD_H = 52
 local ICON = 36
-local MEDIA = "Interface\\AddOns\\EasyDelete\\Media\\"
+--Space on the left for the accent bar, and the height of the buttons below the rule
+local LEFT = 20
+local FOOTER = 48
 
 local GetInfo = C_Item and C_Item.GetItemInfo or GetItemInfo
 local GetIcon = C_Item and C_Item.GetItemIconByID or GetItemIcon
@@ -67,7 +68,7 @@ end
 
 local function CreateDialog()
     dialog = CreateFrame("Frame", "EasyDeleteDialog", UIParent)
-    dialog:SetSize(WIDTH, 152)
+    dialog:SetSize(WIDTH, 140)
     dialog:SetPoint("TOP", 0, -135)
     dialog:SetFrameStrata("DIALOG")
     dialog:SetToplevel(true)
@@ -82,34 +83,28 @@ local function CreateDialog()
     table.insert(UISpecialFrames, "EasyDeleteDialog")
     ns:Fill(dialog, theme.window)
     ns:Border(dialog, theme.border)
-    local strip = dialog:CreateTexture(nil, "ARTWORK")
-    strip:SetHeight(2)
-    strip:SetPoint("TOPLEFT", 1, -1)
-    strip:SetPoint("TOPRIGHT", -1, -1)
-    strip:SetColorTexture(ns:GetAccent())
+    --The accent colour down the left side
+    local bar = dialog:CreateTexture(nil, "ARTWORK")
+    bar:SetWidth(3)
+    bar:SetPoint("TOPLEFT", 1, -1)
+    bar:SetPoint("BOTTOMLEFT", 1, 1)
+    bar:SetColorTexture(ns:GetAccent())
 
-    local glyph = dialog:CreateTexture(nil, "ARTWORK")
-    glyph:SetSize(16, 16)
-    glyph:SetPoint("TOPLEFT", 14, -15)
-    glyph:SetTexture(MEDIA .. "trash")
-    glyph:SetVertexColor(ns:GetAccent())
     dialog.title = ns:Text(dialog, 14)
-    dialog.title:SetPoint("LEFT", glyph, "RIGHT", 8, 0)
+    dialog.title:SetPoint("TOPLEFT", LEFT, -15)
     dialog.title:SetText(ns.L.title)
     local close = ns:Button(dialog, "x", 22, 22, function() Finish(false) end)
     close:SetPoint("TOPRIGHT", -10, -10)
 
     --The item: its icon with the stack size, its name in its quality's colour and the quality below it. Hover it for
     --the item's tooltip
-    local card = CreateFrame("Frame", nil, dialog)
-    card:SetHeight(CARD_H)
-    card:SetPoint("TOPLEFT", 14, -44)
-    card:SetPoint("TOPRIGHT", -14, -44)
-    ns:Fill(card, theme.well)
-    dialog.setCardBorder = ns:Border(card, theme.borderStrong)
-    local iconFrame = CreateFrame("Frame", nil, card)
+    local item = CreateFrame("Frame", nil, dialog)
+    item:SetHeight(ICON)
+    item:SetPoint("TOPLEFT", LEFT, -42)
+    item:SetPoint("TOPRIGHT", -14, -42)
+    local iconFrame = CreateFrame("Frame", nil, item)
     iconFrame:SetSize(ICON, ICON)
-    iconFrame:SetPoint("LEFT", 8, 0)
+    iconFrame:SetPoint("LEFT")
     dialog.setIconBorder = ns:Border(iconFrame, theme.borderStrong)
     dialog.icon = iconFrame:CreateTexture(nil, "ARTWORK")
     dialog.icon:SetPoint("TOPLEFT", 1, -1)
@@ -118,35 +113,41 @@ local function CreateDialog()
     dialog.count = ns:Text(iconFrame, 11, theme.text, "RIGHT")
     dialog.count:SetFont(ns:GetFont(), 11, "OUTLINE")
     dialog.count:SetPoint("BOTTOMRIGHT", -2, 2)
-    dialog.name = ns:Text(card, 13)
+    dialog.name = ns:Text(item, 13)
     dialog.name:SetPoint("TOPLEFT", iconFrame, "TOPRIGHT", 10, -3)
-    dialog.name:SetPoint("RIGHT", card, "RIGHT", -10, 0)
-    dialog.details = ns:Text(card, 11, theme.dim)
+    dialog.name:SetPoint("RIGHT", item, "RIGHT", 0, 0)
+    dialog.details = ns:Text(item, 11, theme.dim)
     dialog.details:SetPoint("BOTTOMLEFT", iconFrame, "BOTTOMRIGHT", 10, 3)
-    dialog.details:SetPoint("RIGHT", card, "RIGHT", -10, 0)
-    card:EnableMouse(true)
-    card:SetScript("OnEnter", function(self)
+    dialog.details:SetPoint("RIGHT", item, "RIGHT", 0, 0)
+    item:EnableMouse(true)
+    item:SetScript("OnEnter", function(self)
         if dialog.link then
             GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
             GameTooltip:SetHyperlink(dialog.link)
             GameTooltip:Show()
         end
     end)
-    card:SetScript("OnLeave", function() GameTooltip:Hide() end)
+    item:SetScript("OnLeave", function() GameTooltip:Hide() end)
 
     --For quest items: deleting one can also abandon its quest
     dialog.warning = ns:Text(dialog, 11, theme.warning)
-    dialog.warning:SetPoint("TOPLEFT", card, "BOTTOMLEFT", 0, -10)
-    dialog.warning:SetWidth(WIDTH - 28)
+    dialog.warning:SetPoint("TOPLEFT", item, "BOTTOMLEFT", 0, -10)
+    dialog.warning:SetWidth(WIDTH - LEFT - 14)
     dialog.warning:SetWordWrap(true)
     dialog.warning:SetText(ns.L.questWarning)
 
-    dialog.delete = ns:Button(dialog, DELETE or "Delete", 96, 26, function() Finish(true) end, true)
-    dialog.delete:SetPoint("BOTTOMRIGHT", -14, 14)
-    dialog.cancel = ns:Button(dialog, CANCEL or "Cancel", 80, 26, function() Finish(false) end)
+    --A thin rule, then the key hint, Cancel and a solid Delete
+    local rule = dialog:CreateTexture(nil, "ARTWORK")
+    rule:SetHeight(1)
+    rule:SetPoint("BOTTOMLEFT", LEFT, FOOTER)
+    rule:SetPoint("BOTTOMRIGHT", -14, FOOTER)
+    rule:SetColorTexture(1, 1, 1, 0.08)
+    dialog.delete = ns:Button(dialog, DELETE or "Delete", 100, 26, function() Finish(true) end, 'solid')
+    dialog.delete:SetPoint("BOTTOMRIGHT", -14, 12)
+    dialog.cancel = ns:Button(dialog, CANCEL or "Cancel", 72, 26, function() Finish(false) end, 'plain')
     dialog.cancel:SetPoint("RIGHT", dialog.delete, "LEFT", -8, 0)
     dialog.hint = ns:Text(dialog, 10, theme.section)
-    dialog.hint:SetPoint("LEFT", dialog, "BOTTOMLEFT", 14, 27)
+    dialog.hint:SetPoint("LEFT", dialog, "BOTTOMLEFT", LEFT, 25)
     dialog.hint:SetPoint("RIGHT", dialog.cancel, "LEFT", -8, 0)
     dialog.hint:SetText(ns.L.hint)
 
@@ -201,7 +202,6 @@ local function Paint(item, quest)
     dialog.link = item.link
     dialog.icon:SetTexture(item.icon)
     dialog.setIconBorder(r, g, b, 0.9)
-    dialog.setCardBorder(r, g, b, 0.35)
     dialog.name:SetText(item.name)
     dialog.name:SetTextColor(r, g, b, 1)
     dialog.count:SetText(item.count and item.count > 1 and tostring(item.count) or "")
@@ -216,7 +216,7 @@ local function Paint(item, quest)
     dialog.details:SetText(table.concat(details, "  ·  "))
     dialog.warning:SetShown(quest and true or false)
     local warning = quest and (dialog.warning:GetStringHeight() or 14) + 10 or 0
-    dialog:SetHeight(44 + CARD_H + warning + 56)
+    dialog:SetHeight(42 + ICON + warning + 14 + FOOTER)
 end
 
 --Shows the dialog for the item on the cursor, or updates it when it already shows. name and quality come from the
