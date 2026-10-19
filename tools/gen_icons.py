@@ -1,6 +1,6 @@
 """Draws the addon's textures in EasyDelete/Media/ and the README icon, in the line style of Crescendo's logo.
 
-- Icon.tga: the AddOns list icon, a red trash can in a ring, 64x64
+- Icon.tga: the AddOns list icon, a crimson trash can in a ring, 64x64
 - .github/icon.png: the README icon, 256x256
 
 Run: python3 tools/gen_icons.py"""
@@ -10,7 +10,7 @@ from PIL import Image, ImageDraw
 
 root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 media = os.path.join(root, 'EasyDelete', 'Media')
-RED = (255, 89, 77, 255)
+RED = (199, 41, 46, 255)
 
 
 def trash(draw, p, width, color):

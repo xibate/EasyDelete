@@ -2,7 +2,7 @@ local folder, ns = ...
 
 --Easy Delete: deleting an item takes one click. The game's delete popup, which asks to type DELETE for rare and better
 --items, is replaced by the addon's own dialog (Dialog.lua). With the game's popup picked as the style (Options.lua),
---and always in combat, the game's popup shows instead, with DELETE filled in and the item's link where the text box was
+--and always in combat, the game's popup shows instead, with DELETE filled in and no line asking to type it
 
 local L = ns.L
 
@@ -16,7 +16,7 @@ local DELETE_POPUPS = {
 local PREVIEW_POPUP = "EASYDELETE_PREVIEW"
 
 local function Print(message)
-    print("|cffff594dEasy Delete|r " .. message)
+    print("|cffc7292eEasy Delete|r " .. message)
 end
 
 local function UseDialog()
@@ -34,9 +34,11 @@ local function PopupEditBox(popup)
     return popup.GetEditBox and popup:GetEditBox() or popup.editBox
 end
 
---The game's popup made easy: DELETE typed in, so Yes works, and the item's link where the text box was
+--The game's popup made easy: DELETE typed in, so Yes works, and the text box hidden. The question loses its line about
+--typing DELETE, so it reads like the game's popup for common items, and the buttons move up into the text box's place.
+--question is that shorter text, by default the game's own for the popup (DELETE_ITEM for DELETE_GOOD_ITEM)
 local links = {}
-local function EasePopup(which, link)
+local function EasePopup(which, item, question)
     local popup = StaticPopup_FindVisible and StaticPopup_FindVisible(which)
     if not popup then
         return
@@ -49,16 +51,33 @@ local function EasePopup(which, link)
     editBox:SetText(DELETE_ITEM_CONFIRM_STRING or "DELETE")
     editBox:Hide()
     yes:Enable()
-    local text = links[popup]
-    if not text then
-        text = popup:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
-        popup:HookScript("OnHide", function() text:Hide() end)
-        links[popup] = text
+    item = item or select(3, GetCursorInfo())
+    question = question or _G[(which:gsub("_GOOD", ""))]
+    local text, buttons = popup.Text, popup.ButtonContainer
+    if text and buttons and item and type(question) == 'string' then
+        text:SetFormattedText(question, item)
+        --The game's own spacing between the text and the buttons
+        buttons:ClearAllPoints()
+        buttons:SetPoint("TOP", text, "BOTTOM", 0, -9)
+        if popup.Layout then
+            popup:Layout()
+        end
+        if links[popup] then
+            links[popup]:Hide()
+        end
+        return
     end
-    text:ClearAllPoints()
-    text:SetPoint("CENTER", editBox)
-    text:SetText(link or select(3, GetCursorInfo()) or "")
-    text:Show()
+    --A popup without those parts keeps its text, with the item's link where the text box was
+    local link = links[popup]
+    if not link then
+        link = popup:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+        popup:HookScript("OnHide", function() link:Hide() end)
+        links[popup] = link
+    end
+    link:ClearAllPoints()
+    link:SetPoint("CENTER", editBox)
+    link:SetText(item or "")
+    link:Show()
 end
 
 --Runs after the game shows any popup. A delete popup is swapped for the dialog, or made easy
@@ -106,7 +125,7 @@ function ns:PreviewStyle(style)
         end
         local link = "|cffff8000[" .. L.previewItem .. "]|r"
         StaticPopup_Show(PREVIEW_POPUP, link)
-        EasePopup(PREVIEW_POPUP, link)
+        EasePopup(PREVIEW_POPUP, link, DELETE_ITEM)
     else
         if StaticPopupDialogs[PREVIEW_POPUP] then
             StaticPopup_Hide(PREVIEW_POPUP)
