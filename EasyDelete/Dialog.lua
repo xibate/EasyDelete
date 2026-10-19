@@ -149,6 +149,7 @@ local function CreateDialog()
     dialog.hint = ns:Text(dialog, 10, theme.section)
     dialog.hint:SetPoint("LEFT", dialog, "BOTTOMLEFT", LEFT, 25)
     dialog.hint:SetPoint("RIGHT", dialog.cancel, "LEFT", -8, 0)
+    dialog.hint:SetWordWrap(true)
     dialog.hint:SetText(ns.L.hint)
 
     --The game can take the item off the cursor, like when it is put back in the bags
