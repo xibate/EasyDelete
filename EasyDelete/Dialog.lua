@@ -253,6 +253,14 @@ function ns:PreviewDialog()
     dialog:Show()
 end
 
+--Closes the dialog when it shows a preview
+function ns:ClosePreview()
+    if dialog and dialog:IsShown() and dialog.preview then
+        dialog.resolved = true
+        dialog:Hide()
+    end
+end
+
 function ns:IsDialogShown()
     return dialog ~= nil and dialog:IsShown()
 end

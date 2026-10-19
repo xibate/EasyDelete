@@ -19,6 +19,8 @@
 ## Version: 4.0
 ## DefaultState: enabled
 ## SavedVariables: EasyDeleteDB
+Locale.lua
 Theme.lua
 Dialog.lua
+Options.lua
 EasyDelete.lua

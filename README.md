@@ -26,7 +26,12 @@ Deleting a valuable item in World of Warcraft makes you type the word **DELETE**
 - **Quest items are flagged.** A warning shows when deleting the item also abandons its quest.
 - **A modern look.** Dark panels, thin borders and a red accent, matching Crescendo and EllesmereUI. With EllesmereUI installed, the dialog uses its font.
 - **Every version of the game.** One download works on Retail, all Classic flavors and WoW Forever.
-- **Zero setup.** Install it and it works. Prefer the game's own popup? Type `/easydelete classic`.
+- **Your choice of style.** The first time you log in, Easy Delete asks which you prefer: its own dialog, or the game's popup with “DELETE” already filled in. Change it any time in *Options > AddOns > Easy Delete* or with `/easydelete`.
+- **Plays nicely with other addons.** If another addon has already dealt with the delete popup, Easy Delete stays out of its way, so you never get two dialogs.
+
+<div align="center">
+<img src=".github/options.png" alt="Picking a style the first time" width="500">
+</div>
 
 ## Supported game versions
 
@@ -58,10 +63,11 @@ The game automatically loads the right `.toc` file for the client you are playin
 
 | Command | What it does |
 | --- | --- |
-| `/easydelete` | Shows which dialog is in use and the commands. `/edel` works too. |
+| `/easydelete` | Opens the options, where you pick the style. `/edel` works too. |
 | `/easydelete preview` | Shows the dialog with an example item, without deleting anything. |
-| `/easydelete classic` | Uses the game's own popup instead, with “DELETE” already filled in. |
-| `/easydelete dialog` | Goes back to Easy Delete's dialog. |
+| `/easydelete classic` | Uses the game's own popup, with “DELETE” already filled in. |
+| `/easydelete dialog` | Uses Easy Delete's dialog. |
+| `/easydelete help` | Lists the commands. |
 
 ## How it works
 
@@ -74,6 +80,13 @@ When you drag an item out of your bags to destroy it, the game opens its confirm
 The game restricts what addons can do in combat, so to be safe Easy Delete uses the game's popup in combat with “DELETE” already filled in, and **Yes** works right away. If a fight starts while the dialog is open, the item goes back to your bags.
 
 The item is only ever deleted when you click **Delete** or press **Enter** yourself.
+
+## Other addons
+
+Some addons and UI packs also change the delete popup, usually by filling in “DELETE” for you. Easy Delete works alongside them:
+
+- If another addon closes the game's popup before Easy Delete gets to it, for example to show a dialog of its own, Easy Delete leaves it alone. You never get two dialogs.
+- If another addon only fills in “DELETE”, Easy Delete still shows its dialog, and its options page tells you that the other addon's delete option isn't needed any more.
 
 ## Credits
 

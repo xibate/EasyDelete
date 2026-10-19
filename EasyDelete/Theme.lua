@@ -7,6 +7,7 @@ local theme = {
     window = { 0.069, 0.058, 0.047, 0.97 },
     panel = { 0.089, 0.080, 0.072, 1 },
     well = { 0.030, 0.023, 0.018, 0.6 },
+    input = { 0.103, 0.095, 0.088, 0.9 },
     border = { 1, 1, 1, 0.06 },
     borderStrong = { 1, 1, 1, 0.22 },
     text = { 1, 1, 1, 0.9 },
@@ -82,6 +83,13 @@ function ns:Text(parent, size, color, justify)
     text:SetTextColor(Color(color or theme.text))
     text:SetJustifyH(justify or "LEFT")
     text:SetWordWrap(false)
+    return text
+end
+
+--A small upper case section label
+function ns:SectionLabel(parent, label)
+    local text = ns:Text(parent, 10, theme.section)
+    text:SetText(label:upper())
     return text
 end
 
