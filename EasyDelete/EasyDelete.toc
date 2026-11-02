@@ -17,6 +17,11 @@
 ## X-Website: https://www.curseforge.com/wow/addons/easy-delete
 ## X-Curse-Project-ID: 96313
 ## Author: Xibate, Zynx
-## Version: 3
+## Version: 4.0
 ## DefaultState: enabled
+## SavedVariables: EasyDeleteDB
+Locale.lua
+Theme.lua
+Dialog.lua
+Options.lua
 EasyDelete.lua
